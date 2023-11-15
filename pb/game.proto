@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package gamePb;
+option go_package="./pb";
+
+message Empty {}
+
+message Info{
+    string map = 1;
+    int32 rounds = 2;
+    int32 time = 3;
+}
+
+message Vec2{
+    float X = 1;
+    float Y = 2;
+}
+
+message Upgrade{
+    int32 X = 1;
+    int32 Y = 2;
+    int32 Type =3;
+}
+
+message Player{
+    Vec2 vel=1;
+    int32 direction=2;
+    int32 frameIndex=3;
+    Vec2 b=4;
+    repeated Upgrade upgrades=5;
+}
+
+service GameService {
+    rpc PlayerInfo(stream Player) returns (stream Player){};
+    rpc GameInfo(Empty) returns (stream Info){};
+}
+
