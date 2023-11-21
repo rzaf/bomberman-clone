@@ -1,8 +1,8 @@
 package game
 
 import (
-	"bomberman/core"
 	"fmt"
+	"github.com/rzaf/bomberman-clone/core"
 	"math/rand"
 	"sync"
 	"sync/atomic"

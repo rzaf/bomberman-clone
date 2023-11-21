@@ -1,9 +1,9 @@
 package running
 
 import (
-	"bomberman/core"
-	"bomberman/game"
-	// "bomberman/pb"
+	"github.com/rzaf/bomberman-clone/core"
+	"github.com/rzaf/bomberman-clone/game"
+	// "github.com/rzaf/bomberman-clone/pb"
 	// "sync"
 	"fmt"
 

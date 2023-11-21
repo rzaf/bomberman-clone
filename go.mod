@@ -1,4 +1,4 @@
-module bomberman
+module github.com/rzaf/bomberman-clone
 
 go 1.19
 

@@ -1,7 +1,7 @@
 package game
 
 import (
-	"bomberman/core"
+	"github.com/rzaf/bomberman-clone/core"
 	// "fmt"
 	"time"
 

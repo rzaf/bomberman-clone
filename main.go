@@ -1,11 +1,11 @@
 package main
 
 import (
-	"bomberman/game"
-	"bomberman/states/editor"
-	"bomberman/states/menu"
-	"bomberman/states/running"
 	"fmt"
+	"github.com/rzaf/bomberman-clone/game"
+	"github.com/rzaf/bomberman-clone/states/editor"
+	"github.com/rzaf/bomberman-clone/states/menu"
+	"github.com/rzaf/bomberman-clone/states/running"
 
 	ray "github.com/gen2brain/raylib-go/raylib"
 )
@@ -46,7 +46,7 @@ func main() {
 	ray.InitAudioDevice()
 	running.LoadSounds()
 	ray.SetTargetFPS(60)
-	ray.InitWindow(600, 600, "Bomberman")
+	ray.InitWindow(600, 600, "bomberman-clone")
 	ray.SetWindowState(ray.FlagWindowResizable)
 	ray.SetWindowSize(600, 600)
 	ray.SetExitKey(0)

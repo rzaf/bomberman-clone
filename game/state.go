@@ -2,7 +2,7 @@ package game
 
 import "sync"
 
-// "bomberman/states/running"
+// "github.com/rzaf/bomberman-clone/states/running"
 
 // var State StateI
 

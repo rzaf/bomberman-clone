@@ -1,8 +1,8 @@
 package running
 
 import (
-	"bomberman/core"
-	"bomberman/game"
+	"github.com/rzaf/bomberman-clone/core"
+	"github.com/rzaf/bomberman-clone/game"
 
 	ray "github.com/gen2brain/raylib-go/raylib"
 )

@@ -1,9 +1,9 @@
 package menu
 
 import (
-	"bomberman/core"
-	"bomberman/game"
 	"fmt"
+	"github.com/rzaf/bomberman-clone/core"
+	"github.com/rzaf/bomberman-clone/game"
 
 	ray "github.com/gen2brain/raylib-go/raylib"
 )
@@ -17,7 +17,6 @@ const (
 )
 
 var (
-	DefaultFont ray.Font
 	currentMenu uint8 = MENU_BATTLE
 
 	battleText *core.Text
@@ -30,7 +29,6 @@ var (
 type MainMenu struct{}
 
 func (MainMenu) OnEnter() {
-	// core.GetSound("huryy2").Play()
 	fmt.Println("*** entering main menu state")
 	core.LoadTexture("assets/characters.png", "anims", ray.NewRectangle(0, 0, 100, 100))
 	core.LoadTexture("assets/tiles.png", "tiles", ray.NewRectangle(0, 0, 1060, 680))
@@ -128,7 +126,6 @@ func (MainMenu) Update() {
 	}
 
 	if ray.IsKeyPressed(ray.KeyEnter) {
-		fmt.Println("menu pressed")
 		switch currentMenu {
 		case MENU_BATTLE:
 			game.State.Change(game.BATTLE_MENU)

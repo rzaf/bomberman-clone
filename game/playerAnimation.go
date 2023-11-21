@@ -1,8 +1,8 @@
 package game
 
 import (
-	"bomberman/core"
 	ray "github.com/gen2brain/raylib-go/raylib"
+	"github.com/rzaf/bomberman-clone/core"
 )
 
 type PlayerAnimations struct {

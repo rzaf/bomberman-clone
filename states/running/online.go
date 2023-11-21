@@ -1,10 +1,10 @@
 package running
 
 import (
-	"bomberman/game"
-	"bomberman/pb"
 	"context"
 	"fmt"
+	"github.com/rzaf/bomberman-clone/game"
+	"github.com/rzaf/bomberman-clone/pb"
 	"io"
 	"log"
 	"net"
