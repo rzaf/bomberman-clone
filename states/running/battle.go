@@ -45,16 +45,29 @@ func fitCamera() {
 }
 
 func LoadSounds() {
-	core.LoadSound("assets/audio/Battle 1.mp3", "battle1").SetVolume(0.8)
+	core.LoadSound("assets/audio/Battle 1.mp3", "battle1")
 	core.LoadSound("assets/audio/Place Bomb.wav", "place-bomb")
 	core.LoadSound("assets/audio/Bomb Bounce.wav", "bomb-bounce")
-	core.LoadSound("assets/audio/Bomb Explodes.wav", "bomb-explode").SetVolume(0.8)
+	core.LoadSound("assets/audio/Bomb Explodes.wav", "bomb-explode")
 	core.LoadSound("assets/audio/Hurry Up 1.wav", "huryy1")
 	core.LoadSound("assets/audio/Hurry Up 2.wav", "huryy2")
 	core.LoadSound("assets/audio/Item Bounce.wav", "item-bounce")
 	core.LoadSound("assets/audio/Item Get.wav", "item-get")
 	core.LoadSound("assets/audio/Stage Clear.wav", "stage-clear")
 	core.LoadSound("assets/audio/Stage Start.wav", "stage-start")
+}
+
+func SetSoundsVolume() {
+	core.GetSound("battle1").SetVolume(game.MusicVolume)
+	core.GetSound("place-bomb").SetVolume(game.EffectVolume)
+	core.GetSound("bomb-bounce").SetVolume(game.EffectVolume)
+	core.GetSound("bomb-explode").SetVolume(game.EffectVolume)
+	core.GetSound("huryy1").SetVolume(game.EffectVolume)
+	core.GetSound("huryy2").SetVolume(game.EffectVolume)
+	core.GetSound("item-bounce").SetVolume(game.EffectVolume)
+	core.GetSound("item-get").SetVolume(game.EffectVolume)
+	core.GetSound("stage-clear").SetVolume(game.EffectVolume)
+	core.GetSound("stage-start").SetVolume(game.EffectVolume)
 }
 
 func LoadTextures() {
@@ -228,7 +241,7 @@ func updateBattle() {
 		return
 	}
 
-	if ray.IsKeyPressed(ray.KeyEscape) {
+	if game.IsKeyPressed("pause") {
 		game.State.Change(game.PAUSED)
 		return
 	}

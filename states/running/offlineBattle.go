@@ -24,7 +24,6 @@ func (OfflineBattle) OnEnter() {
 	if !core.GetSound("battle1").IsPlaying() {
 		core.GetSound("battle1").Play()
 	}
-	game.LoadDefaultKeys()
 }
 
 func (OfflineBattle) OnWindowResized() {

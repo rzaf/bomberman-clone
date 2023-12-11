@@ -6,6 +6,7 @@ import (
 	"github.com/rzaf/bomberman-clone/states/editor"
 	"github.com/rzaf/bomberman-clone/states/menu"
 	"github.com/rzaf/bomberman-clone/states/running"
+	"github.com/rzaf/bomberman-clone/states/setting"
 
 	ray "github.com/gen2brain/raylib-go/raylib"
 )
@@ -34,6 +35,8 @@ func changeState() {
 		stateI = running.OnlineMenu{}
 	case game.MENU:
 		stateI = menu.MainMenu{}
+	case game.SETTING:
+		stateI = setting.Setting{}
 	case game.EDITOR:
 		stateI = editor.Editor{}
 	}
@@ -46,11 +49,11 @@ func main() {
 	ray.InitAudioDevice()
 	running.LoadSounds()
 	ray.SetTargetFPS(60)
-	ray.InitWindow(600, 600, "bomberman-clone")
+	ray.InitWindow(int32(game.Width), int32(game.Height), "bomberman-clone")
 	ray.SetWindowState(ray.FlagWindowResizable)
-	ray.SetWindowSize(600, 600)
+	ray.SetWindowSize(game.Width, game.Height)
 	ray.SetExitKey(0)
-	ray.SetMasterVolume(0.5)
+	setting.Load()
 	running.LoadTextures()
 	g1 := game.MENU
 	g2 := game.MENU
@@ -65,6 +68,8 @@ func main() {
 			changeState()
 		} else {
 			if ray.IsWindowResized() {
+				game.Width = ray.GetScreenWidth()
+				game.Height = ray.GetScreenHeight()
 				stateI.OnWindowResized()
 			}
 			stateI.Update()

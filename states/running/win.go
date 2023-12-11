@@ -63,19 +63,19 @@ func (Win) OnWindowResized() {
 }
 
 func (Win) Update() {
-	if ray.IsKeyReleased(ray.KeyUp) {
+	if game.IsKeyPressed("p1-Up") {
 		if currentWinMenuIndex == 0 {
 			currentWinMenuIndex = len(winMenuTexts) - 1
 		} else {
 			currentWinMenuIndex -= 1
 		}
 		changeWinMenuColor()
-	} else if ray.IsKeyReleased(ray.KeyDown) {
+	} else if game.IsKeyPressed("p1-Down") {
 		currentWinMenuIndex = (currentWinMenuIndex + 1) % len(winMenuTexts)
 		changeWinMenuColor()
 	}
 
-	if ray.IsKeyPressed(ray.KeyEnter) {
+	if game.IsKeyPressed("accept") {
 		switch currentWinMenuIndex {
 		case 0:
 			if game.LastState.Get() == game.OFFLINE_BATTLE {

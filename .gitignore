@@ -1,1 +1,6 @@
-bomberman-clone
+bomberman-clone*
+*.json
+*.sh
+
+!build.sh
+!generatePb.sh

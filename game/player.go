@@ -97,22 +97,22 @@ func (p *Player) getNormalizedDirection() ray.Vector2 {
 	var l, r, u, d int
 	pN := fmt.Sprintf("p%d-", p.Number)
 
-	if IsKeyDown(pN + "moveLeft") {
+	if IsKeyDown(pN + "Left") {
 		l = 1
 	} else {
 		l = 0
 	}
-	if IsKeyDown(pN + "moveRight") {
+	if IsKeyDown(pN + "Right") {
 		r = 1
 	} else {
 		r = 0
 	}
-	if IsKeyDown(pN + "moveUp") {
+	if IsKeyDown(pN + "Up") {
 		u = 1
 	} else {
 		u = 0
 	}
-	if IsKeyDown(pN + "moveDown") {
+	if IsKeyDown(pN + "Down") {
 		d = 1
 	} else {
 		d = 0

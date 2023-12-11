@@ -12,6 +12,7 @@ const (
 	MENU_BATTLE uint8 = iota
 	MENU_ONLINE
 	MENU_EDITOR
+	MENU_SETTING
 	MENU_EXIT
 	MENU_COUNT
 )
@@ -19,11 +20,12 @@ const (
 var (
 	currentMenu uint8 = MENU_BATTLE
 
-	battleText *core.Text
-	onlineText *core.Text
-	editorText *core.Text
-	exitText   *core.Text
-	gameCamera ray.Camera2D = ray.NewCamera2D(ray.NewVector2(0, 0), ray.NewVector2(0, 0), 0, 1)
+	battleText  *core.Text
+	onlineText  *core.Text
+	editorText  *core.Text
+	settingText *core.Text
+	exitText    *core.Text
+	gameCamera  ray.Camera2D = ray.NewCamera2D(ray.NewVector2(0, 0), ray.NewVector2(0, 0), 0, 1)
 )
 
 type MainMenu struct{}
@@ -38,6 +40,7 @@ func (MainMenu) OnEnter() {
 		battleText = core.NewText("OFFLINE BATTLE", ray.GetFontDefault(), ray.NewVector2(0, 0), 52, 4, ray.Red)
 		onlineText = core.NewText("ONLINE BATTLE", ray.GetFontDefault(), ray.NewVector2(0, 0), 42, 4, ray.White)
 		editorText = core.NewText("LEVEL EDITOR", ray.GetFontDefault(), ray.NewVector2(0, 0), 42, 4, ray.White)
+		settingText = core.NewText("SETTING", ray.GetFontDefault(), ray.NewVector2(0, 0), 42, 4, ray.White)
 		exitText = core.NewText("QUIT", ray.GetFontDefault(), ray.NewVector2(0, 0), 42, 4, ray.White)
 	}
 	changeTexts()
@@ -75,15 +78,20 @@ func changeTexts() {
 	battleText.Color = ray.White
 	onlineText.Color = ray.White
 	editorText.Color = ray.White
+	settingText.Color = ray.White
 	exitText.Color = ray.White
 	battleText.FontSize = 42
 	onlineText.FontSize = 42
 	editorText.FontSize = 42
+	settingText.FontSize = 42
 	exitText.FontSize = 42
 	switch currentMenu {
 	case MENU_BATTLE:
 		battleText.Color = ray.Red
 		battleText.FontSize = 52
+	case MENU_SETTING:
+		settingText.Color = ray.Red
+		settingText.FontSize = 52
 	case MENU_EDITOR:
 		editorText.Color = ray.Red
 		editorText.FontSize = 52
@@ -97,6 +105,7 @@ func changeTexts() {
 	battleText.Measure()
 	onlineText.Measure()
 	editorText.Measure()
+	settingText.Measure()
 	exitText.Measure()
 }
 
@@ -104,28 +113,31 @@ func resizeTexts() {
 	battleText.Pos.X = float32(ray.GetScreenWidth()) / 2
 	onlineText.Pos.X = float32(ray.GetScreenWidth()) / 2
 	editorText.Pos.X = float32(ray.GetScreenWidth()) / 2
+	settingText.Pos.X = float32(ray.GetScreenWidth()) / 2
 	exitText.Pos.X = float32(ray.GetScreenWidth()) / 2
+
 	battleText.Pos.Y = float32(ray.GetScreenHeight())/2 - 200
 	onlineText.Pos.Y = float32(ray.GetScreenHeight())/2 - 100
 	editorText.Pos.Y = float32(ray.GetScreenHeight()) / 2
-	exitText.Pos.Y = float32(ray.GetScreenHeight())/2 + 100
+	settingText.Pos.Y = float32(ray.GetScreenHeight())/2 + 100
+	exitText.Pos.Y = float32(ray.GetScreenHeight())/2 + 200
 }
 
 func (MainMenu) Update() {
 
-	if ray.IsKeyPressed(ray.KeyUp) {
+	if game.IsKeyPressed("p1-Up") {
 		if currentMenu == 0 {
 			currentMenu = MENU_COUNT - 1
 		} else {
 			currentMenu -= 1
 		}
 		changeTexts()
-	} else if ray.IsKeyPressed(ray.KeyDown) {
+	} else if game.IsKeyPressed("p1-Down") {
 		currentMenu = (currentMenu + 1) % MENU_COUNT
 		changeTexts()
 	}
 
-	if ray.IsKeyPressed(ray.KeyEnter) {
+	if game.IsKeyPressed("accept") {
 		switch currentMenu {
 		case MENU_BATTLE:
 			game.State.Change(game.BATTLE_MENU)
@@ -133,6 +145,8 @@ func (MainMenu) Update() {
 			game.State.Change(game.EDITOR)
 		case MENU_ONLINE:
 			game.State.Change(game.ONLINE_MENU)
+		case MENU_SETTING:
+			game.State.Change(game.SETTING)
 		case MENU_EXIT:
 			game.State.Change(game.QUIT)
 		}
@@ -148,5 +162,6 @@ func (MainMenu) Draw() {
 	battleText.DrawCentered()
 	editorText.DrawCentered()
 	onlineText.DrawCentered()
+	settingText.DrawCentered()
 	exitText.DrawCentered()
 }

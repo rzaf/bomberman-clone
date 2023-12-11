@@ -91,7 +91,7 @@ func (BattleMenu) OnWindowResized() {
 }
 
 func (BattleMenu) Update() {
-	if ray.IsKeyPressed(ray.KeyEnter) {
+	if game.IsKeyPressed("accept") {
 		loadLevel(mapNames[currentMapIndex].Text)
 		fmt.Println(game.LastState, "is last state online_menu:", game.LastState.Get() == game.ONLINE_MENU)
 		if game.LastState.Get() == game.ONLINE_MENU && isHost {
@@ -102,19 +102,19 @@ func (BattleMenu) Update() {
 		}
 		return
 	}
-	if ray.IsKeyPressed(ray.KeyUp) {
+	if game.IsKeyPressed("p1-Up") {
 		if menuState == 0 {
 			menuState = s_MENU_COUNT - 1
 		} else {
 			menuState -= 1
 		}
 		changeMenuColor()
-	} else if ray.IsKeyPressed(ray.KeyDown) {
+	} else if game.IsKeyPressed("p1-Down") {
 		menuState = (menuState + 1) % s_MENU_COUNT
 		changeMenuColor()
 	}
 
-	if ray.IsKeyPressed(ray.KeyRight) {
+	if game.IsKeyPressed("p1-Right") {
 		switch menuState {
 		case s_MENU_MAP:
 			changeMap((currentMapIndex + 1) % len(gameMaps))
@@ -129,7 +129,7 @@ func (BattleMenu) Update() {
 			}
 			timeText.Text = fmt.Sprintf("%d:%02d", roundTimeSeconds/60, roundTimeSeconds%60)
 		}
-	} else if ray.IsKeyPressed(ray.KeyLeft) {
+	} else if game.IsKeyPressed("p1-Left") {
 		switch menuState {
 		case s_MENU_MAP:
 			i := currentMapIndex

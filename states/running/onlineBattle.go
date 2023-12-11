@@ -20,7 +20,6 @@ func (OnlineBattle) OnEnter() {
 	if !core.GetSound("battle1").IsPlaying() {
 		core.GetSound("battle1").Play()
 	}
-	game.LoadDefaultKeys()
 
 	if !isHost {
 		game.DropUpgrades = false

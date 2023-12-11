@@ -58,7 +58,7 @@ func (OnlineMenu) OnWindowResized() {
 }
 
 func (OnlineMenu) Update() {
-	if ray.IsKeyPressed(ray.KeyEscape) {
+	if game.IsKeyPressed("pause") {
 		game.State.Change(game.MENU)
 	}
 
@@ -69,7 +69,7 @@ func (OnlineMenu) Update() {
 		return
 	}
 
-	if ray.IsKeyPressed(ray.KeyUp) || ray.IsKeyPressed(ray.KeyDown) {
+	if game.IsKeyPressed("p1-Up") || game.IsKeyPressed("p1-Down") {
 		if isHost {
 			isHost = false
 			hostText.Color = ray.White
@@ -80,11 +80,7 @@ func (OnlineMenu) Update() {
 			joinText.Color = ray.White
 		}
 	}
-	if ray.IsKeyPressed(ray.KeyEscape) {
-		game.State.Change(game.MENU)
-		// quitOnlineMenu()
-	}
-	if ray.IsKeyPressed(ray.KeyEnter) {
+	if game.IsKeyPressed("accept") {
 		if isHost {
 			game.State.Change(game.BATTLE_MENU)
 			go host()

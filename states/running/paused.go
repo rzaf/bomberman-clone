@@ -64,7 +64,7 @@ func (Paused) OnWindowResized() {
 }
 
 func (Paused) Update() {
-	if ray.IsKeyPressed(ray.KeyEscape) {
+	if game.IsKeyPressed("pause") {
 		game.State.Change(game.LastState.Get())
 		return
 	}
@@ -72,18 +72,18 @@ func (Paused) Update() {
 		updateBattle()
 	}
 
-	if ray.IsKeyReleased(ray.KeyUp) {
+	if game.IsKeyPressed("p1-Up") {
 		if currentPauseMenuIndex == 0 {
 			currentPauseMenuIndex = len(pauseMenuTexts) - 1
 		} else {
 			currentPauseMenuIndex -= 1
 		}
 		changePauseMenuColor()
-	} else if ray.IsKeyReleased(ray.KeyDown) {
+	} else if game.IsKeyPressed("p1-Down") {
 		currentPauseMenuIndex = (currentPauseMenuIndex + 1) % len(pauseMenuTexts)
 		changePauseMenuColor()
 	}
-	if ray.IsKeyPressed(ray.KeyEnter) {
+	if game.IsKeyPressed("accept") {
 		switch currentPauseMenuIndex {
 		case 0:
 			game.State.Change(game.LastState.Get())
