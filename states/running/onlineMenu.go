@@ -55,6 +55,9 @@ func (OnlineMenu) OnWindowResized() {
 	hostText.Pos = ray.NewVector2(w/2, h/2-50)
 	joinText.Pos = ray.NewVector2(w/2, h/2+50)
 	waitingText1.Pos = ray.NewVector2(w/2, 100)
+	hostText.Measure()
+	joinText.Measure()
+	waitingText1.Measure()
 }
 
 func (OnlineMenu) Update() {

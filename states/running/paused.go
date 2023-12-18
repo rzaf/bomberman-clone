@@ -8,27 +8,42 @@ import (
 )
 
 var (
-	pausedText            *core.Text
-	pauseMenuTexts        []*core.Text
-	currentPauseMenuIndex int
+	pausedText *core.Text
+	pauseMenu  *game.Menu
 )
 
 type Paused struct{}
 
 func (Paused) OnEnter() {
-	if pauseMenuTexts == nil {
-		currentPauseMenuIndex = 0
+	if pauseMenu == nil {
 		pausedText = core.NewText("PAUSED", ray.GetFontDefault(), ray.NewVector2(float32(ray.GetScreenWidth())/2, 25), 25, 3, ray.White)
-		pauseMenuTexts = append(pauseMenuTexts, core.NewText("RESUME", ray.GetFontDefault(), ray.NewVector2(float32(ray.GetScreenWidth())/2, 200), 32, 5, ray.Red))
-		pauseMenuTexts = append(pauseMenuTexts, core.NewText("RESTART", ray.GetFontDefault(), ray.NewVector2(float32(ray.GetScreenWidth())/2, 250), 32, 5, ray.White))
-		pauseMenuTexts = append(pauseMenuTexts, core.NewText("MAIN MENU", ray.GetFontDefault(), ray.NewVector2(float32(ray.GetScreenWidth())/2, 300), 32, 5, ray.White))
-		pauseMenuTexts = append(pauseMenuTexts, core.NewText("EXIT", ray.GetFontDefault(), ray.NewVector2(float32(ray.GetScreenWidth())/2, 350), 32, 5, ray.White))
+		resumeItem := game.NewMenuItem("RESUME", func() {
+			game.State.Change(game.LastState.Get())
+		})
+		restartItem := game.NewMenuItem("RESTART", func() {
+			if game.LastState.Get() == game.OFFLINE_BATTLE {
+				game.State.Change(game.BATTLE_MENU)
+			} else {
+				game.State.Change(game.ONLINE_MENU)
+			}
+		})
+		mainMenuItem := game.NewMenuItem("MAIN MENU", func() {
+			game.State.Change(game.MENU)
+		})
+		quitItem := game.NewMenuItem("EXIT", func() {
+			game.State.Change(game.QUIT)
+		})
+		pauseMenu = game.NewMenu(resumeItem, restartItem, mainMenuItem, quitItem)
+		pauseMenu.FontSize = 25
+		pauseMenu.SelectedFontSize = 25
+		pauseMenu.Padding = 50
+		pauseMenu.Pos.Y = 200
 	}
 
+	pauseMenu.Pos.X = float32(game.Width) / 2
+	pauseMenu.SetIndex(0)
+
 	pausedText.Pos = ray.NewVector2(float32(ray.GetScreenWidth())/2, 25)
-	for _, t := range pauseMenuTexts {
-		t.Pos.X = float32(ray.GetScreenWidth()) / 2
-	}
 }
 
 func (Paused) OnExit() {
@@ -45,22 +60,12 @@ func (Paused) OnExit() {
 	}
 }
 
-func changePauseMenuColor() {
-	for i, t := range pauseMenuTexts {
-		if i == currentPauseMenuIndex {
-			t.Color = ray.Red
-		} else {
-			t.Color = ray.White
-		}
-	}
-}
-
 func (Paused) OnWindowResized() {
 	fitCamera()
-	pausedText.Pos = ray.NewVector2(float32(ray.GetScreenWidth())/2, 25)
-	for _, t := range pauseMenuTexts {
-		t.Pos.X = float32(ray.GetScreenWidth()) / 2
-	}
+	pausedText.Pos.X = float32(game.Width) / 2
+	pausedText.Measure()
+	pauseMenu.Pos.X = float32(game.Width) / 2
+	pauseMenu.Refresh()
 }
 
 func (Paused) Update() {
@@ -72,40 +77,12 @@ func (Paused) Update() {
 		updateBattle()
 	}
 
-	if game.IsKeyPressed("p1-Up") {
-		if currentPauseMenuIndex == 0 {
-			currentPauseMenuIndex = len(pauseMenuTexts) - 1
-		} else {
-			currentPauseMenuIndex -= 1
-		}
-		changePauseMenuColor()
-	} else if game.IsKeyPressed("p1-Down") {
-		currentPauseMenuIndex = (currentPauseMenuIndex + 1) % len(pauseMenuTexts)
-		changePauseMenuColor()
-	}
-	if game.IsKeyPressed("accept") {
-		switch currentPauseMenuIndex {
-		case 0:
-			game.State.Change(game.LastState.Get())
-		case 1:
-			if game.LastState.Get() == game.OFFLINE_BATTLE {
-				game.State.Change(game.BATTLE_MENU)
-			} else {
-				game.State.Change(game.ONLINE_MENU)
-			}
-		case 2:
-			game.State.Change(game.MENU)
-		case 3:
-			game.State.Change(game.QUIT)
-		}
-	}
+	pauseMenu.Update()
 }
 
 func (Paused) Draw() {
 	drawBattle()
 	ray.DrawRectangle(0, 0, int32(ray.GetScreenWidth()), int32(ray.GetScreenHeight()), ray.NewColor(0, 0, 0, 200))
 	pausedText.DrawCentered()
-	for _, t := range pauseMenuTexts {
-		t.DrawCentered()
-	}
+	pauseMenu.Draw()
 }

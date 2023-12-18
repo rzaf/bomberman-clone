@@ -117,6 +117,8 @@ func (Editor) OnWindowResized() {
 	restartButton.Boundary = ray.NewRectangle(0, float32(ray.GetScreenHeight())-30, 100, 100)
 	saveButton.Text.Pos = ray.NewVector2(150, float32(ray.GetScreenHeight())-20)
 	saveButton.Boundary = ray.NewRectangle(100, float32(ray.GetScreenHeight())-30, 100, 100)
+	restartButton.Text.Measure()
+	saveButton.Text.Measure()
 }
 
 func (Editor) Update() {
