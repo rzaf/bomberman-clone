@@ -42,11 +42,11 @@ func LoadDefaultKeys() {
 	secondoryKeys["p1-Up"] = ray.KeyUp
 	secondoryKeys["p1-Down"] = ray.KeyDown
 
-	gamePadMaps[0].keys["p1-Left"] = ray.GamepadXboxButtonLeft
-	gamePadMaps[0].keys["p1-Right"] = ray.GamepadXboxButtonRight
-	gamePadMaps[0].keys["p1-Up"] = ray.GamepadXboxButtonUp
-	gamePadMaps[0].keys["p1-Down"] = ray.GamepadXboxButtonDown
-	gamePadMaps[0].keys["p1-placeBomb"] = ray.GamepadXboxButtonA
+	gamePadMaps[0].keys["p1-Left"] = ray.GamepadButtonLeftFaceLeft
+	gamePadMaps[0].keys["p1-Right"] = ray.GamepadButtonLeftFaceRight
+	gamePadMaps[0].keys["p1-Up"] = ray.GamepadButtonLeftFaceUp
+	gamePadMaps[0].keys["p1-Down"] = ray.GamepadButtonLeftFaceDown
+	gamePadMaps[0].keys["p1-placeBomb"] = ray.GamepadButtonRightFaceDown
 
 	//// p2
 	firstKeys["p2-Left"] = ray.KeyKp4  //ray.KeyLeft
@@ -55,11 +55,11 @@ func LoadDefaultKeys() {
 	firstKeys["p2-Down"] = ray.KeyKp5  //ray.KeyDown
 	firstKeys["p2-placeBomb"] = ray.KeyL
 
-	gamePadMaps[1].keys["p2-Left"] = ray.GamepadXboxButtonLeft
-	gamePadMaps[1].keys["p2-Right"] = ray.GamepadXboxButtonRight
-	gamePadMaps[1].keys["p2-Up"] = ray.GamepadXboxButtonUp
-	gamePadMaps[1].keys["p2-Down"] = ray.GamepadXboxButtonDown
-	gamePadMaps[1].keys["p2-placeBomb"] = ray.GamepadXboxButtonA
+	gamePadMaps[1].keys["p2-Left"] = ray.GamepadButtonLeftFaceLeft
+	gamePadMaps[1].keys["p2-Right"] = ray.GamepadButtonLeftFaceRight
+	gamePadMaps[1].keys["p2-Up"] = ray.GamepadButtonLeftFaceUp
+	gamePadMaps[1].keys["p2-Down"] = ray.GamepadButtonLeftFaceDown
+	gamePadMaps[1].keys["p2-placeBomb"] = ray.GamepadButtonLeftFaceDown
 }
 
 func AddFirstKey(action string, key int) {

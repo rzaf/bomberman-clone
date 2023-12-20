@@ -93,31 +93,35 @@ func drawControllerMapping() {
 
 func GetGamepadKeyName(key int32) string {
 	switch key {
-	case ray.GamepadXboxButtonA:
+	case ray.GamepadButtonRightFaceDown:
 		return "A"
-	case ray.GamepadXboxButtonB:
+	case ray.GamepadButtonRightFaceRight:
 		return "B"
-	case ray.GamepadXboxButtonX:
+	case ray.GamepadButtonRightFaceLeft:
 		return "X"
-	case ray.GamepadXboxButtonY:
+	case ray.GamepadButtonRightFaceUp:
 		return "Y"
-	case ray.GamepadXboxButtonLb:
+	case ray.GamepadButtonLeftTrigger1:
 		return "Lb"
-	case ray.GamepadXboxButtonRb:
+	case ray.GamepadButtonLeftTrigger2:
+		return "Lt"
+	case ray.GamepadButtonRightTrigger1:
 		return "Rb"
-	case ray.GamepadXboxButtonSelect:
-		return "Select"
-	case ray.GamepadXboxButtonStart:
-		return "Start"
-	case ray.GamepadXboxButtonUp:
+	case ray.GamepadButtonRightTrigger2:
+		return "Rt"
+	case ray.GamepadButtonLeftFaceUp:
 		return "Up"
-	case ray.GamepadXboxButtonRight:
+	case ray.GamepadButtonLeftFaceRight:
 		return "Right"
-	case ray.GamepadXboxButtonDown:
+	case ray.GamepadButtonLeftFaceDown:
 		return "Down"
-	case ray.GamepadXboxButtonLeft:
+	case ray.GamepadButtonLeftFaceLeft:
 		return "Left"
-	case ray.GamepadXboxButtonHome:
+	case ray.GamepadButtonMiddleLeft:
+		return "Select"
+	case ray.GamepadButtonMiddleRight:
+		return "Start"
+	case ray.GamepadButtonMiddle:
 		return "Home"
 		// case ray.GamepadXboxAxisLt:
 		// 	return "AxisLt"
