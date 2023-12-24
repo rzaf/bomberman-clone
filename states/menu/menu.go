@@ -9,18 +9,30 @@ import (
 )
 
 var (
-	menu       *game.Menu
-	gameCamera ray.Camera2D = ray.NewCamera2D(ray.NewVector2(0, 0), ray.NewVector2(0, 0), 0, 1)
+	menu              *game.Menu
+	gameCamera        ray.Camera2D = ray.NewCamera2D(ray.NewVector2(0, 0), ray.NewVector2(0, 0), 0, 1)
+	githubProfileLink *core.Button
 )
 
 type MainMenu struct{}
 
-func (MainMenu) OnEnter() {
+func (m MainMenu) OnEnter() {
 	fmt.Println("*** entering main menu state")
 	core.LoadTexture("assets/characters.png", "anims", ray.NewRectangle(0, 0, 100, 100))
 	core.LoadTexture("assets/tiles.png", "tiles", ray.NewRectangle(0, 0, 1060, 680))
 	game.TileManager.GameMap = &game.GameMap{}
 	game.TileManager.LoadFromFile("assets/menuMap.txt")
+	if githubProfileLink == nil {
+		t2 := core.NewText("github.com/rzaf/bomberman-clone", ray.GetFontDefault(), ray.NewVector2(90, float32(game.Height)-20), 15, 2, ray.White)
+		githubProfileLink = core.NewTextButton(
+			t2,
+			ray.NewRectangle(t2.Pos.X, t2.Pos.Y, t2.Size.X, t2.Size.Y),
+		)
+
+		githubProfileLink.OnClick = func() {
+			ray.OpenURL("https://github.com/rzaf/bomberman-clone/")
+		}
+	}
 	if menu == nil {
 		battleItem := game.NewMenuItem("OFFLINE BATTLE", func() {
 			game.State.Change(game.BATTLE_MENU)
@@ -43,13 +55,10 @@ func (MainMenu) OnEnter() {
 		menu.Padding = 100
 	}
 
-	menu.Pos.X = float32(game.Width) / 2
-	menu.Pos.Y = float32(game.Height)/2 - 200
-	menu.Refresh()
 	i, j := game.TileManager.Length()
 	gameCamera.Target.X = float32(game.TILE_LENGTH*i) / 2
 	gameCamera.Target.Y = float32(game.TILE_LENGTH*j) / 2
-	fitCamera()
+	m.OnWindowResized()
 }
 
 func (MainMenu) OnExit() {}
@@ -59,6 +68,8 @@ func (MainMenu) OnWindowResized() {
 	menu.Pos.Y = float32(game.Height)/2 - 200
 	menu.Refresh()
 	fitCamera()
+	githubProfileLink.Text.Pos = ray.NewVector2(90, float32(game.Height)-20)
+	githubProfileLink.Boundary.Y = githubProfileLink.Text.Pos.Y
 }
 
 func fitCamera() {
@@ -78,6 +89,7 @@ func fitCamera() {
 
 func (MainMenu) Update() {
 	menu.Update()
+	githubProfileLink.Update()
 }
 
 func (MainMenu) Draw() {
@@ -87,4 +99,6 @@ func (MainMenu) Draw() {
 
 	ray.DrawRectangle(0, 0, int32(ray.GetScreenWidth()), int32(ray.GetScreenHeight()), ray.NewColor(0, 0, 0, 150))
 	menu.Draw()
+	ray.DrawText("Source Code:", 5, int32(game.Height)-18, 12, ray.White)
+	githubProfileLink.Draw()
 }
