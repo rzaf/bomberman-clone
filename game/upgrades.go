@@ -163,7 +163,7 @@ func (u *UpgradeTile) Draw() {
 			u.texture.DrawAt(ray.NewRectangle(float32(u.X), float32(u.Y), float32(u.Width), float32(u.Height)))
 		}
 	}
-	if ShowCollsions && u.HasCollision {
+	if ShowCollisions && u.HasCollision {
 		ray.DrawRectangleLinesEx(u.GetCollision(), 2, ray.Blue)
 	}
 }

@@ -17,7 +17,7 @@ type collisionObjects struct {
 }
 
 var (
-	ShowCollsions    bool = false
+	ShowCollisions   bool = false
 	CollisionManager collisionObjects
 )
 

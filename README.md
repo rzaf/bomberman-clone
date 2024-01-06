@@ -8,7 +8,7 @@ Super bomberman 2 (SNES) clone in Go using <a href="https://github.com/gen2brain
 ![Level editor](screenshots/3.png)
 
 ## features
-* Upgrades (speed up, wall pass, extra bomb, wall pass, ...)
+* Upgrades (speed up, wall pass, extra bomb, ...)
 * Local multiplayer
 * Online multiplayer (grpc)
 * Option menu (audio and keymapping)

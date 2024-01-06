@@ -247,17 +247,11 @@ func updateBattle() {
 	}
 
 	if ray.IsKeyPressed(ray.KeyF1) {
-		game.ShowCollsions = !game.ShowCollsions
+		game.ShowCollisions = !game.ShowCollisions
 	}
 	p1.Update()
 	p2.Update()
 
-	// mouseWheel := ray.GetMouseWheelMove()
-	// if mouseWheel > 0 {
-	// 	p1.Scale += 0.2
-	// } else if mouseWheel < 0 {
-	// 	p1.Scale -= 0.2
-	// }
 	game.TileManager.Update()
 	updateUi()
 }

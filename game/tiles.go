@@ -44,7 +44,7 @@ func (t *Tile) String() string {
 
 func (t *Tile) Draw() {
 	t.texture.DrawAt(ray.NewRectangle(float32(t.X), float32(t.Y), float32(t.Width), float32(t.Height)))
-	if ShowCollsions && t.HasCollision {
+	if ShowCollisions && t.HasCollision {
 		ray.DrawRectangleLinesEx(t.GetCollision(), 2, ray.Blue)
 	}
 }
@@ -126,9 +126,6 @@ func (w *WallTile) Draw() {
 	} else {
 		w.texture.DrawAt(ray.NewRectangle(float32(w.X), float32(w.Y), float32(w.Width), float32(w.Height)))
 	}
-	// if ShowCollsions && w.HasCollision {
-	// 	ray.DrawRectangleLinesEx(w.GetCollision(), 2, ray.Blue)
-	// }
 }
 
 type FloorTile struct {

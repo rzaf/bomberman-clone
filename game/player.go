@@ -273,10 +273,7 @@ func (p *Player) Draw() {
 			p.Animations.crying2.DrawCenteredAtWithScale(p.Position.X, p.Position.Y, p.Scale)
 		}
 	}
-	// p.PlayerAnimations.WalkingDown.DrawAt(ray.NewRectangle(20, 20, 16*3, 25*3))
-	// p.PlayerAnimations.WalkingDown.DrawAt(ray.NewRectangle(20, 20, 16*3, 25*3))
-	// p.PlayerAnimations.WalkingLeft.DrawCenteredAt(p.position.X, p.position.Y)
-	if ShowCollsions {
+	if ShowCollisions {
 		ray.DrawRectangleLinesEx(p.GetCollision(), 2, ray.Red)
 	}
 }

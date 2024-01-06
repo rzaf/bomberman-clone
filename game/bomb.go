@@ -297,7 +297,7 @@ func (b *BombTile) Draw() {
 	} else {
 		b.idle.DrawAt(ray.NewRectangle(float32(b.X), float32(b.Y), float32(b.Width), float32(b.Height)))
 	}
-	if ShowCollsions && b.HasCollision {
+	if ShowCollisions && b.HasCollision {
 		ray.DrawRectangleLinesEx(b.GetCollision(), 2, ray.Blue)
 	}
 }
