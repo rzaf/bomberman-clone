@@ -169,8 +169,7 @@ func (p *Player) move() {
 	pRec := p.GetCollision()
 	if col, collided := p.collides(); collided {
 		p.Position.X -= p.Velocity.X * ray.GetFrameTime()
-		// fmt.Println(rec.Y - pRec.Y)
-		if wall, isWall := col.(*WallTile); isWall && wall.isDestoryable {
+		if wall, isWall := col.(*WallTile); isWall && wall.I > 0 && wall.J > 0 && wall.I-1 < TileManager.XCount && wall.J < TileManager.YCount-1 {
 			rec := col.GetCollision()
 			if p.Velocity.Y <= 0 {
 				if rec.Y-pRec.Y > rec.Height/3 {
@@ -193,7 +192,7 @@ func (p *Player) move() {
 	if col, collided := p.collides(); collided {
 		p.Position.Y -= p.Velocity.Y * ray.GetFrameTime()
 		rec := col.GetCollision()
-		if wall, isWall := col.(*WallTile); isWall && wall.isDestoryable {
+		if wall, isWall := col.(*WallTile); isWall && wall.I > 0 && wall.J > 0 && wall.I < TileManager.XCount-1 && wall.J < TileManager.YCount-1 {
 			// fmt.Println(rec.Width - (pRec.X - rec.X))
 			if p.Velocity.X == 0 {
 				if pRec.Width-(rec.X-pRec.X) < rec.Width/3 {
