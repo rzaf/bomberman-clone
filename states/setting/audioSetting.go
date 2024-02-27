@@ -15,7 +15,7 @@ var (
 )
 
 func updateAudio() {
-	if game.IsKeyPressed("back") || ray.IsKeyPressed(ray.KeyBackspace) {
+	if game.IsKeyPressed("back") {
 		isSelected = false
 		changeTexts()
 		return

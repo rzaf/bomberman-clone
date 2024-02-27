@@ -104,6 +104,7 @@ func (Setting) OnEnter() {
 	currentMenuIndex = 0
 	changeTexts()
 	isSelected = false
+	isWaiting = false
 	masterV = game.MasterVolume
 	musicV = game.MusicVolume
 	effectV = game.EffectVolume
@@ -149,7 +150,6 @@ func (Setting) Update() {
 			}
 			changeTexts()
 		}
-
 	} else {
 		switch currentMenuIndex {
 		case 0:

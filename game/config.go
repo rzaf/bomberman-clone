@@ -2,8 +2,8 @@ package game
 
 var (
 	//display
-	Width  int = 600
-	Height int = 600
+	Width  int = 800
+	Height int = 800
 
 	// audio
 	MasterVolume float32 = 0.5

@@ -64,6 +64,7 @@ func main() {
 	stateI.OnEnter()
 	for !ray.WindowShouldClose() && gs != game.QUIT {
 		// ray.DrawFPS(0, 0)
+		game.UpdateKeys()
 		if gs != game.State.Get() {
 			changeState()
 		} else {

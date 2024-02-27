@@ -17,7 +17,7 @@ func updateControllerMapping() {
 		updateWaiting()
 		return
 	}
-	if game.IsKeyPressed("back") || ray.IsKeyPressed(ray.KeyBackspace) {
+	if game.IsKeyPressed("back") {
 		isSelected = false
 		Load()
 		changeTexts()
@@ -50,13 +50,16 @@ func updateControllerMapping() {
 		} else {
 			if ray.IsGamepadAvailable(int32(currentGamePadId)) {
 				isWaiting = true
+				errMessage = ""
 				enteredT = time.Now().Second()
 			}
 		}
-	} else if ray.IsKeyPressed(ray.KeySpace) {
-		game.AddGamepadKey(currentGamePadId, actions[currentJ], -1)
-	} else if ray.IsKeyPressed(ray.KeyR) {
-		game.ResetKeys()
+	} else if ray.IsKeyPressed(ray.KeyF1) {
+		if currentJ < len(actions) {
+			game.AddGamepadKey(currentGamePadId, actions[currentJ], game.NewKey(game.Gamepad, -1))
+		}
+	} else if ray.IsKeyPressed(ray.KeyF2) {
+		game.LoadDefaultKeys()
 	}
 }
 
@@ -71,60 +74,87 @@ func drawControllerMapping() {
 		ray.DrawText(actions[i], tlX+120, 100+int32(i)*20, 18, ray.White)
 	}
 	for i := 0; i < len(actions); i++ {
-		if currentI == 2 && currentJ == i {
+		if isSelected && currentI == 2 && currentJ == i {
 			ray.DrawText(GetGamepadKeyName(game.GetGamepadKey(currentGamePadId, actions[i])), tlX+320, 100+int32(i)*20, 18, ray.Red)
 		} else {
 			ray.DrawText(GetGamepadKeyName(game.GetGamepadKey(currentGamePadId, actions[i])), tlX+320, 100+int32(i)*20, 18, ray.White)
 		}
 	}
-	if currentJ == len(actions) {
+	if isSelected && currentJ == len(actions) {
 		ray.DrawText("Apply", tlX+320, 110+int32(len(actions))*20, 23, ray.Red)
 	} else {
 		ray.DrawText("Apply", tlX+320, 110+int32(len(actions))*20, 23, ray.White)
 	}
 
 	if isSelected {
-		ray.DrawText("press SPACE to reset key", 50, int32(game.Height)-50, 20, ray.White)
+		ray.DrawText("press F1 to reset current key", 50, int32(game.Height)-55, 20, ray.White)
+		ray.DrawText("press F2 to reset to default", 50, int32(game.Height)-25, 20, ray.White)
 	}
 	if isWaiting {
 		drawWaiting()
 	}
 }
 
-func GetGamepadKeyName(key int32) string {
-	switch key {
-	case ray.GamepadButtonRightFaceDown:
-		return "A"
-	case ray.GamepadButtonRightFaceRight:
-		return "B"
-	case ray.GamepadButtonRightFaceLeft:
-		return "X"
-	case ray.GamepadButtonRightFaceUp:
-		return "Y"
-	case ray.GamepadButtonLeftTrigger1:
-		return "Lb"
-	case ray.GamepadButtonLeftTrigger2:
-		return "Lt"
-	case ray.GamepadButtonRightTrigger1:
-		return "Rb"
-	case ray.GamepadButtonRightTrigger2:
-		return "Rt"
-	case ray.GamepadButtonLeftFaceUp:
-		return "Up"
-	case ray.GamepadButtonLeftFaceRight:
-		return "Right"
-	case ray.GamepadButtonLeftFaceDown:
-		return "Down"
-	case ray.GamepadButtonLeftFaceLeft:
-		return "Left"
-	case ray.GamepadButtonMiddleLeft:
-		return "Select"
-	case ray.GamepadButtonMiddleRight:
-		return "Start"
-	case ray.GamepadButtonMiddle:
-		return "Home"
-		// case ray.GamepadXboxAxisLt:
-		// 	return "AxisLt"
+func GetGamepadKeyName(gKey game.Key) string {
+	key := gKey.Keyid
+	if gKey.KeyType == game.Gamepad {
+		switch key {
+		case ray.GamepadButtonRightFaceDown:
+			return "A"
+		case ray.GamepadButtonRightFaceRight:
+			return "B"
+		case ray.GamepadButtonRightFaceLeft:
+			return "X"
+		case ray.GamepadButtonRightFaceUp:
+			return "Y"
+		case ray.GamepadButtonLeftTrigger1:
+			return "Lb"
+		case ray.GamepadButtonLeftTrigger2:
+			return "Lt"
+		case ray.GamepadButtonRightTrigger1:
+			return "Rb"
+		case ray.GamepadButtonRightTrigger2:
+			return "Rt"
+		case ray.GamepadButtonLeftFaceUp:
+			return "Up"
+		case ray.GamepadButtonLeftFaceRight:
+			return "Right"
+		case ray.GamepadButtonLeftFaceDown:
+			return "Down"
+		case ray.GamepadButtonLeftFaceLeft:
+			return "Left"
+		case ray.GamepadButtonMiddleLeft:
+			return "Select"
+		case ray.GamepadButtonMiddleRight:
+			return "Start"
+		case ray.GamepadButtonMiddle:
+			return "Home"
+			// case ray.GamepadXboxAxisLt:
+			// 	return "AxisLt"
+		}
+	} else if gKey.KeyType == game.GamepadAxis {
+		switch key {
+		case game.GamepadAxisLeftXRight:
+			return "Axis L Right"
+		case game.GamepadAxisLeftXLeft:
+			return "Axis L Left"
+		case game.GamepadAxisLeftYUp:
+			return "Axis L Up"
+		case game.GamepadAxisLeftYDown:
+			return "Axis L Down"
+		case game.GamepadAxisRightXRight:
+			return "Axis R Right"
+		case game.GamepadAxisRightXLeft:
+			return "Axis R Left"
+		case game.GamepadAxisRightYUp:
+			return "Axis R Up"
+		case game.GamepadAxisRightYDown:
+			return "Axis R Down"
+		case game.GamepadAxisLeftTrigger:
+			return "L3"
+		case game.GamepadAxisRightTrigger:
+			return "R3"
+		}
 	}
 	return "-"
 }

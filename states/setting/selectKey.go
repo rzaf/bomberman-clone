@@ -20,21 +20,50 @@ func updateWaiting() {
 		isWaiting = false
 		return
 	}
-	if currentI < 2 { // keyboard
-		k := ray.GetKeyPressed()
+	if currentI < 2 { // keyboard and mouse
+		k := ray.GetKeyPressed() //keyboard
 		if k > 0 {
-			fmt.Println(k, GetKeyName(k))
-			if GetKeyName(k) != "-" {
+			fmt.Println(k, GetKeyName(game.NewKey(game.Keyboard, k)))
+			if GetKeyName(game.NewKey(game.Keyboard, k)) != "-" {
 				if currentI == 0 {
-					game.AddFirstKey(actions[currentJ], int(k))
+					game.AddFirstKey(actions[currentJ], game.NewKey(game.Keyboard, int32(k)))
 				} else {
-					game.AddSecondryKey(actions[currentJ], int(k))
+					game.AddSecondryKey(actions[currentJ], game.NewKey(game.Keyboard, int32(k)))
 				}
+				game.SetActionDown(actions[currentJ])
 				isWaiting = false
 				errMessage = ""
 				return
 			}
 			errMessage = "invalid key!"
+		}
+		// mouse
+		k = -1
+		if ray.IsMouseButtonReleased(ray.MouseButtonLeft) {
+			k = ray.MouseButtonLeft
+		} else if ray.IsMouseButtonReleased(ray.MouseButtonRight) {
+			k = ray.MouseButtonRight
+		} else if ray.IsMouseButtonReleased(ray.MouseButtonMiddle) {
+			k = ray.MouseButtonMiddle
+		} else if ray.IsMouseButtonReleased(ray.MouseButtonSide) {
+			k = ray.MouseButtonSide
+		} else if ray.IsMouseButtonReleased(ray.MouseButtonExtra) {
+			k = ray.MouseButtonExtra
+		} else if ray.IsMouseButtonReleased(ray.MouseButtonForward) {
+			k = ray.MouseButtonForward
+		} else if ray.IsMouseButtonReleased(ray.MouseButtonBack) {
+			k = ray.MouseButtonBack
+		}
+		if k >= 0 {
+			if currentI == 0 {
+				game.AddFirstKey(actions[currentJ], game.NewKey(game.Mouse, int32(k)))
+			} else {
+				game.AddSecondryKey(actions[currentJ], game.NewKey(game.Mouse, int32(k)))
+			}
+			game.SetActionDown(actions[currentJ])
+			isWaiting = false
+			errMessage = ""
+			return
 		}
 	} else { // controller
 		if !ray.IsGamepadAvailable(int32(currentGamePadId)) {
@@ -48,10 +77,44 @@ func updateWaiting() {
 			if ray.IsGamepadButtonPressed(int32(currentGamePadId), k) {
 				isWaiting = false
 				errMessage = ""
-				game.AddGamepadKey(currentGamePadId, actions[currentJ], int(k))
+				game.AddGamepadKey(currentGamePadId, actions[currentJ], game.NewKey(game.Gamepad, int32(k)))
+				game.SetActionDown(actions[currentJ])
 				return
 			}
 			// errMessage = "invalid key!"
+		}
+		k = -1
+		var moveMent float32
+		moveMent = ray.GetGamepadAxisMovement(int32(currentGamePadId), ray.GamepadAxisLeftX)
+		if moveMent > 0.5 {
+			k = game.GamepadAxisLeftXRight
+		} else if moveMent < (-0.5) {
+			k = game.GamepadAxisLeftXLeft
+		}
+		moveMent = ray.GetGamepadAxisMovement(int32(currentGamePadId), ray.GamepadAxisLeftY)
+		if moveMent > 0.5 {
+			k = game.GamepadAxisLeftYDown
+		} else if moveMent < (-0.5) {
+			k = game.GamepadAxisLeftYUp
+		}
+		moveMent = ray.GetGamepadAxisMovement(int32(currentGamePadId), ray.GamepadAxisRightX)
+		if moveMent > 0.5 {
+			k = game.GamepadAxisRightXRight
+		} else if moveMent < (-0.5) {
+			k = game.GamepadAxisRightXLeft
+		}
+		moveMent = ray.GetGamepadAxisMovement(int32(currentGamePadId), ray.GamepadAxisRightY)
+		if moveMent > 0.5 {
+			k = game.GamepadAxisRightYDown
+		} else if moveMent < (-0.5) {
+			k = game.GamepadAxisRightYUp
+		}
+		if k != -1 {
+			isWaiting = false
+			errMessage = ""
+			game.AddGamepadKey(currentGamePadId, actions[currentJ], game.NewKey(game.GamepadAxis, int32(k)))
+			game.SetActionDown(actions[currentJ])
+			return
 		}
 	}
 }
