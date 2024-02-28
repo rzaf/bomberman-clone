@@ -12,6 +12,7 @@ var (
 	menu              *game.Menu
 	gameCamera        ray.Camera2D = ray.NewCamera2D(ray.NewVector2(0, 0), ray.NewVector2(0, 0), 0, 1)
 	githubProfileLink *core.Button
+	gitVersion        *core.Text
 )
 
 type MainMenu struct{}
@@ -23,6 +24,7 @@ func (m MainMenu) OnEnter() {
 	game.TileManager.GameMap = &game.GameMap{}
 	game.TileManager.LoadFromFile("assets/menuMap.txt")
 	if githubProfileLink == nil {
+		gitVersion = core.NewText("v 0.1.0", ray.GetFontDefault(), ray.NewVector2(float32(game.Width)-70, float32(game.Height)-20), 15, 2, ray.White)
 		t2 := core.NewText("github.com/rzaf/bomberman-clone", ray.GetFontDefault(), ray.NewVector2(90, float32(game.Height)-20), 15, 2, ray.White)
 		githubProfileLink = core.NewTextButton(
 			t2,
@@ -68,6 +70,7 @@ func (MainMenu) OnWindowResized() {
 	menu.Pos.Y = float32(game.Height)/2 - 200
 	menu.Refresh()
 	fitCamera()
+	gitVersion.Pos = ray.NewVector2(float32(game.Width)-70, float32(game.Height)-20)
 	githubProfileLink.Text.Pos = ray.NewVector2(90, float32(game.Height)-20)
 	githubProfileLink.Boundary.Y = githubProfileLink.Text.Pos.Y
 }
@@ -100,5 +103,6 @@ func (MainMenu) Draw() {
 	ray.DrawRectangle(0, 0, int32(ray.GetScreenWidth()), int32(ray.GetScreenHeight()), ray.NewColor(0, 0, 0, 150))
 	menu.Draw()
 	ray.DrawText("Source Code:", 5, int32(game.Height)-18, 12, ray.White)
+	gitVersion.Draw()
 	githubProfileLink.Draw()
 }
