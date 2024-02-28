@@ -32,6 +32,7 @@ type Menu struct {
 	currentIndex     int
 	IsCentered       bool
 	IsMouseEnabled   bool
+	IsClickable      bool
 
 	Pos     ray.Vector2
 	Padding int
@@ -42,6 +43,7 @@ func NewMenu(mItems ...*MenuItem) *Menu {
 	m := Menu{}
 	m.items = mItems
 	m.IsMouseEnabled = true
+	m.IsClickable = true
 	m.currentIndex = 0
 	m.IsCentered = true
 	m.Color = ray.White
@@ -83,26 +85,42 @@ func (m *Menu) Refresh() {
 	}
 }
 
+func (m *Menu) getIndexOfMousePos() int {
+	mousePos := ray.GetMousePosition()
+	rec := ray.NewRectangle(0, 0, 0, 0)
+	for i, item := range m.items {
+		if m.IsCentered {
+			rec.X = item.text.TopLeftPos.X
+			rec.Y = item.text.TopLeftPos.Y
+		} else {
+			rec.X = item.text.Pos.X
+			rec.Y = item.text.Pos.Y
+		}
+		rec.Width = item.text.Size.X
+		rec.Height = item.text.Size.Y
+		if ray.CheckCollisionPointRec(mousePos, rec) {
+			return i
+		}
+	}
+	return -1
+}
 func (m *Menu) Update() {
 	if m.IsMouseEnabled {
 		if v := ray.GetMouseDelta(); v.X != 0 || v.Y != 0 { // mouse moved
-			mousePos := ray.GetMousePosition()
-			rec := ray.NewRectangle(0, 0, 0, 0)
-			for i, item := range m.items {
-				if m.IsCentered {
-					rec.X = item.text.TopLeftPos.X
-					rec.Y = item.text.TopLeftPos.Y
-				} else {
-					rec.X = item.text.Pos.X
-					rec.Y = item.text.Pos.Y
-				}
-				rec.Width = item.text.Size.X
-				rec.Height = item.text.Size.Y
-				if ray.CheckCollisionPointRec(mousePos, rec) {
-					m.currentIndex = i
-					m.Refresh()
-					break
-				}
+			i := m.getIndexOfMousePos()
+			if i != -1 {
+				m.currentIndex = i
+				m.Refresh()
+			}
+		}
+	}
+	if m.IsClickable {
+		if ray.IsMouseButtonReleased(ray.MouseButtonLeft) {
+			i := m.getIndexOfMousePos()
+			if i != -1 {
+				m.currentIndex = i
+				m.items[m.currentIndex].onSubmit()
+				m.Refresh()
 			}
 		}
 	}
