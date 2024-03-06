@@ -164,7 +164,7 @@ func (Editor) Update() {
 			names[0].Text = names[0].Text[:l-1]
 		}
 	}
-	if game.IsKeyPressed("p1-Up") {
+	if ray.IsKeyPressed(ray.KeyUp) {
 		if currentIndex == 0 {
 			currentIndex = len(names) - 1
 		} else {
@@ -174,7 +174,7 @@ func (Editor) Update() {
 		game.TileManager.GameMap = gameMaps[currentIndex]
 		xSlider.SetValue(float32(game.TileManager.XCount))
 		ySlider.SetValue(float32(game.TileManager.YCount))
-	} else if game.IsKeyPressed("p1-Down") {
+	} else if ray.IsKeyPressed(ray.KeyDown) {
 		currentIndex = (currentIndex + 1) % len(names)
 		game.TileManager.GameMap = gameMaps[currentIndex]
 		xSlider.SetValue(float32(game.TileManager.XCount))
