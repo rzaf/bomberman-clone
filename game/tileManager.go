@@ -1,11 +1,13 @@
 package game
 
 import (
+	"bytes"
 	"fmt"
-	"github.com/rzaf/bomberman-clone/core"
 	"log"
 	"os"
 	"sync"
+
+	"github.com/rzaf/bomberman-clone/core"
 
 	ray "github.com/gen2brain/raylib-go/raylib"
 )
@@ -253,7 +255,7 @@ func (m *GameMap) Reload() *GameMap {
 func (m *GameMap) LoadFrom(data []byte, name string) *GameMap {
 	m.Name = name
 	m.EditorMode = false
-	m.data = data
+	m.data = bytes.ReplaceAll(data, []byte("\r\n"), []byte("\n"))
 	m.Reload()
 	return m
 }
