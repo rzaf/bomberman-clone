@@ -10,8 +10,14 @@ download latest executable from <a href="https://github.com/rzaf/bomberman-clone
 
 ![Level editor](screenshots/3.png)
 
+## prerequisites
+- ***gcc***
+- ***protoc*** & go plugins (if you want to compile pb files):
+  - install protocol buffer compiler (<a href="https://grpc.io/docs/protoc-installation/">link</a>) 
+  - install protoc-gen-go and and protoc-gen-go-grpc by running `go install google.golang.org/protobuf/cmd/protoc-gen-go` and `go install google.golang.org/grpc/cmd/protoc-gen-go-grpc`
+  - have protoc and GOPATH in your PATH env
+
 ## building
-* install protocol buffer compiler (<a href="https://grpc.io/docs/protoc-installation/">link</a>) if you want to compile pb files
 * clone project and get get into directory `git clone https://github.com/rzaf/bomberman-clone.git && cd bomberman-clone`
 * run `go mod download` to get required modules
 * run `make all` or run `make build` if you dont have protoc installed
