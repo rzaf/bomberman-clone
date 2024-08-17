@@ -24,7 +24,7 @@ func (m MainMenu) OnEnter() {
 	game.TileManager.GameMap = &game.GameMap{}
 	game.TileManager.LoadFromFile("assets/menuMap.txt")
 	if githubProfileLink == nil {
-		gitVersion = core.NewText("v 0.1.0", ray.GetFontDefault(), ray.NewVector2(float32(game.Width)-70, float32(game.Height)-20), 15, 2, ray.White)
+		gitVersion = core.NewText("v "+game.VersionString, ray.GetFontDefault(), ray.NewVector2(float32(game.Width)-70, float32(game.Height)-20), 15, 2, ray.White)
 		t2 := core.NewText("github.com/rzaf/bomberman-clone", ray.GetFontDefault(), ray.NewVector2(90, float32(game.Height)-20), 15, 2, ray.White)
 		githubProfileLink = core.NewTextButton(
 			t2,
