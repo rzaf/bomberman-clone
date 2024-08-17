@@ -161,7 +161,9 @@ func (Editor) Update() {
 		}
 		if k == ray.KeyBackspace {
 			l := len(names[0].Text)
-			names[0].Text = names[0].Text[:l-1]
+			if l > 0 {
+				names[0].Text = names[0].Text[:l-1]
+			}
 		}
 	}
 	if ray.IsKeyPressed(ray.KeyUp) {
