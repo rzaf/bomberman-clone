@@ -1,7 +1,7 @@
 package game
 
 var (
-	VersionString = "0.1.0"
+	VersionString = "0.1.1"
 
 	//display
 	Width  int = 800
